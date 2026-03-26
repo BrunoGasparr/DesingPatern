@@ -1,15 +1,17 @@
 package DesingPatern;
-//Interface regras de estoque para ser ultilizados
 
 public interface RegrasEstoque {
-    
+
     //Adiciona Produtos ao estoque
 
-    void adicionarProduto(String produto, int quantidade);
+    void adicionarProduto(String nome, double valor, int quantidade);
     //Retira Produtos do estoque
 
-    void retirarProduto(String id, int quantidade);
+    void retirarProduto(int id);
 
+    //Editar Quantidade do Item no ID
+    void editarQuantidade(int id, int quantidade);
+    
     //Buscar Item pelo nome do Produto
 
     void buscarPorNomeDeProduto(String produto);
@@ -20,5 +22,5 @@ public interface RegrasEstoque {
 
     //Verifica se tem aquele item em estoque
 
-    boolean verificarDisponibilidade(String id,int quantidade);
+    boolean verificarDisponibilidade(int id,int quantidade);
 }

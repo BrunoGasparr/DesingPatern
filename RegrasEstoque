@@ -1,0 +1,24 @@
+package DesingPatern;
+//Interface regras de estoque para ser ultilizados
+
+public interface RegrasEstoque {
+    
+    //Adiciona Produtos ao estoque
+
+    void adicionarProduto(String produto, int quantidade);
+    //Retira Produtos do estoque
+
+    void retirarProduto(String id, int quantidade);
+
+    //Buscar Item pelo nome do Produto
+
+    void buscarPorNomeDeProduto(String produto);
+
+    //Mostra Total que está no estoque
+
+    double TotalEstoque();
+
+    //Verifica se tem aquele item em estoque
+
+    boolean verificarDisponibilidade(String id,int quantidade);
+}

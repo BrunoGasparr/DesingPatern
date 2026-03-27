@@ -41,17 +41,17 @@ public class Main {
         carrinhoLoja.adicionarProduto("Notebook Pro", 4500.00);
         carrinhoLoja.adicionarProduto("Mouse Sem Fio", 150.00);
 
-        System.out.println("--- CENÁRIO 1: COMPRA NA LOJA PAGANDO NO CAIXA ---");
+        System.out.println(" CENÁRIO 1: COMPRA NA LOJA ");
         // Injetando a estratégia de pagamento local
         carrinhoLoja.setFormaPagamento(carrinhoLoja);
         carrinhoLoja.finalizarCompra();
 
-        System.out.println("\n--- CENÁRIO 2: COMPRA NA LOJA MAS PAGANDO VIA SITE (TOTEM) ---");
+        System.out.println("\n CENÁRIO 2: COMPRA NA LOJA MAS PAGANDO VIA SITE (TOTEM) ");
         // Reutilizando a estratégia do Site dentro da Loja (Polimorfismo puro)
         carrinhoLoja.setFormaPagamento(processadorWeb);
         carrinhoLoja.finalizarCompra();
 
-        System.out.println("\n--- CENÁRIO 3: ESTORNO USANDO INTERFACE ---");
+        System.out.println("\n CENÁRIO 3: ESTORNO USANDO INTERFACE ");
         executarProcedimentoPadrao(processadorWeb, "TX-999", 100.0);
     }
 

@@ -2,46 +2,16 @@ package DesingPatern;
 
 public class CompraSite implements RegraFinanceiro {
 
-    // guarda o último valor processado
     private double ultimoValorProcessado;
-
-    // estratégia de pagamento
-    private Pagamento formaPagamento;
-
-    // endereço da entrega (necessário na compra online)
     private String enderecoEntrega;
-
-    // define forma de pagamento
-    public void setFormaPagamento(Pagamento formaPagamento) {
-        this.formaPagamento = formaPagamento;
-    }
-
-    // define endereço
-    public void setEnderecoEntrega(String enderecoEntrega) {
-        this.enderecoEntrega = enderecoEntrega;
-    }
+    private final String PLATAFORMA = "Gateway de Pagamento Online";
 
     @Override
     public void pagar(double valor) {
-
-        // valida pagamento
-        if (formaPagamento == null) {
-            System.out.println("[SITE] Forma de pagamento não definida");
-            return;
-        }
-
-        // valida endereço (exigido no site)
-        if (enderecoEntrega == null || enderecoEntrega.isEmpty()) {
-            System.out.println("[SITE] Endereço não informado");
-            return;
-        }
-
         this.ultimoValorProcessado = valor;
-
-        System.out.println("[SITE] Processando pagamento online...");
-
-        // chama estratégia (Pix, Cartão, etc)
-        formaPagamento.pagar(valor);
+        System.out.println("[SITE] Validando cartão de crédito...");
+        System.out.println("[SITE] Pagamento de R$ " + valor + " aprovado.");
+        System.out.println("[SITE] Logística: Preparando envio para: " + this.enderecoEntrega);
     }
 
     @Override
@@ -51,27 +21,29 @@ public class CompraSite implements RegraFinanceiro {
 
     @Override
     public double calcularValorTotal(double valorBruto, double desconto, double taxas) {
+        // No site, 'taxas' geralmente representa o Frete
         return (valorBruto - desconto) + taxas;
     }
 
     @Override
     public void exibirResumoFinanceiro() {
-        System.out.println("--- Relatório Web ---");
-        System.out.println("Endereço: " + enderecoEntrega);
-        System.out.println("Último valor: R$ " + ultimoValorProcessado);
-        System.out.println("Status: Finalizada");
+        System.out.println("\n--- COMPROVANTE DIGITAL ---");
+        System.out.println("Método: " + PLATAFORMA);
+        System.out.println("Valor Final: R$ " + ultimoValorProcessado);
+        System.out.println("Entrega em: " + (enderecoEntrega != null ? enderecoEntrega : "Retirada na Loja"));
     }
 
     @Override
     public double calcularLucroLiquido() {
-        double taxaGateway = ultimoValorProcessado * 0.05;
-        double impostos = ultimoValorProcessado * 0.10;
-        return ultimoValorProcessado - taxaGateway - impostos;
+        // O site tem taxas de transação digital (ex: 5%) e impostos (10%)
+        return ultimoValorProcessado * 0.85;
     }
 
     @Override
     public void realizarEstorno(String transacaoId, double valor) {
-        System.out.println("[SITE] Estorno da transação: " + transacaoId);
-        System.out.println("[SITE] Valor: R$ " + valor);
+        System.out.println("[SITE] Estorno de R$ " + valor + " solicitado para o ID: " + transacaoId);
     }
+
+    // Getter e Setter específico do Site
+    public void setEnderecoEntrega(String endereco) { this.enderecoEntrega = endereco; }
 }

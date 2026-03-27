@@ -42,7 +42,7 @@ public class Estoque implements RegrasEstoque{
     @Override
     public void buscarPorNomeDeProduto(String produto) {
         for (int id=0; id<this.produtos.size(); id++){
-            if (this.produtos.get(id).nome.equals(produto)){
+            if (this.produtos.get(id).getNome().equals(produto)){
                 System.out.println("O produto procurado está na posição "+(id+1)+" com id "+id);
             }
         }
@@ -52,7 +52,7 @@ public class Estoque implements RegrasEstoque{
     public double TotalEstoque() {
         double total = 0;
         for (Produto produto : produtos){
-            total += produto.valor * produto.quantidade;
+            total += produto.getValor() * produto.getQuantidade();
         }
         return total;
     }
@@ -61,7 +61,7 @@ public class Estoque implements RegrasEstoque{
     public boolean verificarDisponibilidade(int id, int quantidade) {
         if (this.produtos.size() > id){
             Produto produto = this.produtos.get(id);
-            return produto.quantidade >= quantidade;
+            return produto.getQuantidade() >= quantidade;
         }
         return false;
     }

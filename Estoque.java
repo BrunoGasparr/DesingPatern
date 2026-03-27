@@ -5,7 +5,7 @@ import java.util.List;
 
 public class Estoque implements RegrasEstoque{
     private List<Produto> produtos;
-    private Estoque instancia;
+    static Estoque instancia = new Estoque();
 
     //Constructor private para garantir que só seja usado uma vez
     private Estoque() {
@@ -13,11 +13,8 @@ public class Estoque implements RegrasEstoque{
     }
 
     //Metodo que usa o constructor uma vez e depois retorna a instancia que foi criada
-    public Estoque getInstancia(){
-        if (this.instancia==null){
-            this.instancia = new Estoque();
-        }
-        return this.instancia;
+    public static Estoque getInstancia(){
+        return instancia;
     }
 
     @Override

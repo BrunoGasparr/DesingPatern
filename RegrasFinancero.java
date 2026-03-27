@@ -14,7 +14,7 @@ public interface RegraFinanceiro {
     // Retorna o lucro líquido (Bruto - Desconto - Taxas - Impostos)
     double calcularLucroLiquido();
 
-    // Realiza o estorno de um valor específico (n sei oque fazer mais)
+    // Realiza o estorno de um valor específico 
     void realizarEstorno(String transacaoId, double valor);
 
 }

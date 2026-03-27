@@ -11,7 +11,7 @@ public interface RegrasEstoque {
 
     //Editar Quantidade do Item no ID
     void editarQuantidade(int id, int quantidade);
-    
+
     //Buscar Item pelo nome do Produto
 
     void buscarPorNomeDeProduto(String produto);

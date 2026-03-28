@@ -31,33 +31,20 @@ public class Main {
         estoque.verificarDisponibilidade(0, 5);
         estoque.verificarDisponibilidade(1, 15);
 
+        System.out.println("\n\n");
 
-        // 1. Padrão Strategy: Criamos diferentes estratégias de processamento financeiro
-        RegraFinanceiro processadorWeb = new CompraSite();
-        ((CompraSite) processadorWeb).setEnderecoEntrega("Rua das Flores, 123");
+        Compra loja_fisica = new Compra("Loja");
+        loja_fisica.adicionarProduto("Teclado", 160);
+        loja_fisica.adicionarProduto("Monitor", 100);
+        loja_fisica.finalizarCompra();
 
-        // 2. O Contexto: A Loja Física
-        CompraLoja carrinhoLoja = new CompraLoja();
-        carrinhoLoja.adicionarProduto("Notebook Pro", 4500.00);
-        carrinhoLoja.adicionarProduto("Mouse Sem Fio", 150.00);
+        System.out.println("\n\n");
 
-        System.out.println(" CENÁRIO 1: COMPRA NA LOJA ");
-        // Injetando a estratégia de pagamento local
-        carrinhoLoja.setFormaPagamento(carrinhoLoja);
-        carrinhoLoja.finalizarCompra();
-
-        System.out.println("\n CENÁRIO 2: COMPRA NA LOJA MAS PAGANDO VIA SITE (TOTEM) ");
-        // Reutilizando a estratégia do Site dentro da Loja (Polimorfismo puro)
-        carrinhoLoja.setFormaPagamento(processadorWeb);
-        carrinhoLoja.finalizarCompra();
-
-        System.out.println("\n CENÁRIO 3: ESTORNO USANDO INTERFACE ");
-        executarProcedimentoPadrao(processadorWeb, "TX-999", 100.0);
+        Compra site = new Compra("Site");
+        site.adicionarProduto("Teclado", 160);
+        site.adicionarProduto("Monitor", 100);
+        site.finalizarCompra();
+        site.getFormaPagamento().setEnderecoEntrega("Rua Marcelo 100");
+        site.finalizarCompra();
     }
-
-    // Método utilitário que não sabe qual classe está recebendo, apenas que segue a Regra
-    public static void executarProcedimentoPadrao(RegraFinanceiro regra, String id, double valor) {
-        regra.realizarEstorno(id, valor);
-    }
-
 }

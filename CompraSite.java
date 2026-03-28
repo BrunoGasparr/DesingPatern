@@ -1,49 +1,58 @@
 package DesingPatern;
 
 public class CompraSite implements RegraFinanceiro {
-
-    private double ultimoValorProcessado;
-    private String enderecoEntrega;
-    private final String PLATAFORMA = "Gateway de Pagamento Online";
+    String enderecoEntrega;
 
     @Override
     public void pagar(double valor) {
-        this.ultimoValorProcessado = valor;
-        System.out.println("[SITE] Validando cartão de crédito...");
-        System.out.println("[SITE] Pagamento de R$ " + valor + " aprovado.");
-        System.out.println("[SITE] Logística: Preparando envio para: " + this.enderecoEntrega);
+        if (enderecoEntrega != null){
+            System.out.println("[SITE] Validando cartão de crédito...");
+            System.out.println("[SITE] Pagamento de R$ " + calcularValorTotal(valor) + " aprovado.");
+            System.out.println("[SITE] Logística: Preparando envio para: " + this.enderecoEntrega);
+        }
     }
 
     @Override
-    public double calcularDesconto(double valorBruto, double percentual) {
-        return valorBruto * (percentual / 100);
+    public String getEnderecoEntrega(){
+        return enderecoEntrega;
     }
 
     @Override
-    public double calcularValorTotal(double valorBruto, double desconto, double taxas) {
-        // No site, 'taxas' geralmente representa o Frete
-        return (valorBruto - desconto) + taxas;
+    public double calcularDesconto(double valorBruto) {
+        //Desconto na loja virtual é 0
+        return valorBruto*1;
     }
 
     @Override
-    public void exibirResumoFinanceiro() {
-        System.out.println("\n--- COMPROVANTE DIGITAL ---");
-        System.out.println("Método: " + PLATAFORMA);
-        System.out.println("Valor Final: R$ " + ultimoValorProcessado);
-        System.out.println("Entrega em: " + (enderecoEntrega != null ? enderecoEntrega : "Retirada na Loja"));
+    public double calcularValorTotal(double valorBruto) {
+        // Descontos vezes a taxa
+        return calcularDesconto(valorBruto)*1.06;
     }
 
     @Override
-    public double calcularLucroLiquido() {
+    public void exibirResumoFinanceiro(double valor) {
+        if (enderecoEntrega != null){
+            System.out.println("\n--- COMPROVANTE DIGITAL ---");
+            System.out.println("Valor Final: R$ " + calcularValorTotal(valor));
+            System.out.println("Entrega em: " + enderecoEntrega);
+            System.out.println("Lucro Total: "+calcularLucroLiquido(valor));
+        } else System.out.println("Você deve decidir o endereço de entrega antes.");
+    }
+
+    @Override
+    public double calcularLucroLiquido(double ultimoValorProcessado) {
         // O site tem taxas de transação digital (ex: 5%) e impostos (10%)
         return ultimoValorProcessado * 0.85;
     }
 
     @Override
-    public void realizarEstorno(String transacaoId, double valor) {
-        System.out.println("[SITE] Estorno de R$ " + valor + " solicitado para o ID: " + transacaoId);
+    public void realizarEstorno() {
+        System.out.println("[SITE] Gerando vale-troca para transação...");
     }
 
     // Getter e Setter específico do Site
-    public void setEnderecoEntrega(String endereco) { this.enderecoEntrega = endereco; }
+    @Override
+    public void setEnderecoEntrega(String endereco){
+        this.enderecoEntrega = endereco;
+    }
 }

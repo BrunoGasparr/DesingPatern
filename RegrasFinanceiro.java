@@ -2,15 +2,19 @@ package DesingPatern;
 
 public interface RegraFinanceiro {
 
-    double calcularDesconto(double valorBruto, double percentual);
+    double calcularDesconto(double valorBruto);
 
-    double calcularValorTotal(double valorBruto, double desconto, double taxas);
+    double calcularValorTotal(double valorBruto);
 
-    void exibirResumoFinanceiro();
+    void exibirResumoFinanceiro(double valor);
 
-    double calcularLucroLiquido();
+    double calcularLucroLiquido(double valor);
 
-    void realizarEstorno(String transacaoId, double valor);
+    void realizarEstorno();
 
     void pagar(double valor);
+
+    String getEnderecoEntrega();
+
+    void setEnderecoEntrega(String endereco);
 }
